@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+:root{
+    --black: #0e0f0e;
+    --white: #f7f7f7;
+    --LoginBackground: #d1d0d3;
+    --HomeBackground: #fefeff;
+    --Blue: #3080ed;
+    --grey: #aaaab8;
+    --info: #f5f7fb;
+
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: 'Space Mono', monospace;
+    height: 100vh;
+    background-color: var(--HomeBackground);
+}
+/* Navbar */
+.userImg img{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin: 0 60px 0 0;
+}
+#navbar{
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    height: 10vh;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.navbar img.icon{
+    height: 20px;
+    cursor: pointer;
+}
+.infoBar{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.notificationIcon{
+    margin: 0 25px 0 0;
+}
+.navbar h4{
+    margin: 3px 0 0 30px;
+}
+.position-relative{
+    border: none;
+    background-color: var(--HomeBackground);
+}
+
+/* Dashboard */
+.nav-tabs .nav-link {
+    color: var(--grey);
+    border: none;
+}
+.nav-link:hover{
+    border: none;
+}
+
+#dashboard{
+    height: 100vh!important;
+    float: left;
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+}
+.dashboard img{
+    height: 20px;
+    cursor: pointer;
+    fill: var(--grey);
+}
+.tabsDiv{
+    display: flex;
+    flex-direction: column;
+}
+.tabsDiv > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 180px;
+    margin: 5px 0 5px 20px;
+    padding: 3px 0 3px 10px;
+}
+.activo{
+    background-color: var(--Blue);
+    color: #0e0f0e;
+}
+.tabsDiv > div:hover{
+    background-color: var(--Blue);
+    border-radius: 7px;
+}
+.nav-tabs .nav-link:hover {
+    color: white;
+}
+.logo{
+    margin: 23px 0 35px 20px;
+    display: flex;
+    align-items: center;
+}
+.logo h3{
+    font-size: 23px;
+    margin: 0 0 0 5px;
+    color: #0e0f0e;
+    font-weight: bold;
+}
+.logo svg{
+    height: 30px;
+}
+.infoUser{
+    background-color: var(--info);
+    margin: 20px 20px 30px 20px;
+    border-radius: 7px;
+    width: 200px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.infoUser img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin: auto 15px auto 0;
+}
+.UserName{
+    display: flex;
+    flex-direction: column;
+}
+span.name{
+    font-weight: bold;
+}
+span.username{
+    color: var(--grey);
+}
+img.BlueCheck{
+    height: 18px;
+    width: 18px;
+}
+/* Hero */
+.hero{
+    display: flex;
+  justify-content: center;
+    align-content: center;
+}
+.hero main {
+    border-radius: 7px;
+    background-color: var(--info);
+    width: calc(100vw - 30vw);
+    min-height: 85vh;
+    position: absolute;
+    bottom: 0;
+  }
+/* Login and Register */
+div.loginRegister{
+    height: 100%;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    background-color: var(--LoginBackground);
+}
+.loginRegister main{
+    display: flex;
+    justify-content: center;
+    width: 90vw;
+    height: 90vh;
+    background-color: var(--white);
+    box-shadow: -6px 6px 9px -1px rgba(153,153,153,0.56);
+}
+.formLogin{
+    width: 40%;
+
+    display: grid;
+    justify-content: center;
+    align-content: center;
+}
+.loginImg{
+    width: 60%;
+}
+.loginImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.emailDiv, .passDiv{
+    display: flex;
+    flex-direction: column;
+}
+input.email, input.pass{
+    height: 40px;
+    padding: 0 20px;
+    margin: 5px 0 20px 0;
+    border: 2px solid var(--LoginBackground);
+    color: #d6d4d1;
+}
+.formLogin h1{
+    text-align: center;
+}
+.formLogin label{
+    color: #191616;
+    font-weight: bold;
+    margin: 5px 0;
+}
+.formLogin span{
+    margin: 5px 0 15px 0;
+}
+.singUpSpan{
+    color: #aeacaa;
+}
+.singUpSpan a{
+    margin:0 2px;
+    text-decoration: none;
+    color: #0e0f0e;
+    font-weight: bold;
+}
+span.forgotPass{
+    font-weight: bold;
+    color: #0e0f0e;
+    text-align: end;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+}
+.signIn{
+    background-color: #0e0f0e;
+    color: white;
+    height: 35px;
+    font-size: 16px;
+    margin: 10px 0 10px 0;
+}
+/* Index */
+.posts{
+    border-radius: 7px;
+    margin: 30px auto;
+    width: 90%;
+    background-color: var(--HomeBackground);
+
+    display: flex;
+    flex-direction: row;
+}
+.posts .profile{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+    margin: 30px 30px 0 30px;
+}
+.textareaDiv{
+
+}
+.textareaDiv textarea{
+    border: none;
+    padding: 0 10px;
+    color: var(--grey);
+    background-color: var(--info);
+    border-radius: 7px;
+    width: 500px;
+    height: 50px;
+    margin: 30px 30px 0 0;
+}
+/* 404 not found */
+div.notfound{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.notfound img{
+    height: 500px;
+    width: 500px;
+}

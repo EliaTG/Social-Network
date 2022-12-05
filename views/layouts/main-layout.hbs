@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>{{pageTitle}}</title>
+</head>
+<body>
+    <section>
+        <div class="navbar" id="navbar">
+            <h4>{{pageTitle}}</h4>
+            <div class="infoBar">
+                <div class="notificationIcon">
+                    <button type="button" class="position-relative">
+                        <img class="icon" src="assets/imgs/bell.svg" alt="Bell">
+                        <span class="badge position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                            <span class="visually-hidden">unread messages</span>
+                        </span>
+                    </button>
+                </div>
+
+                <div class="userImg">
+                    <img src="assets/imgs/profile.webp" alt="Profile picture">
+                </div>
+            </div>
+        </div>
+        <div class="dashboard nav nav-tabs" id="dashboard">
+            <div class="logo">
+                <svg class="w-9" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 54 33">
+                    <path fill="#3080ed" fill-rule="evenodd" d="M27 0c-7.2 0-11.7 3.6-13.5 10.8 2.7-3.6 5.85-4.95 9.45-4.05 2.054.513 3.522 2.004 5.147 3.653C30.744 13.09 33.808 16.2 40.5 16.2c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C36.756 3.11 33.692 0 27 0zM13.5 16.2C6.3 16.2 1.8 19.8 0 27c2.7-3.6 5.85-4.95 9.45-4.05 2.054.514 3.522 2.004 5.147 3.653C17.244 29.29 20.308 32.4 27 32.4c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.513-3.522-2.004-5.147-3.653C23.256 19.31 20.192 16.2 13.5 16.2z" clip-rule="evenodd" />
+                </svg>
+                <h3>BeSocial</h3>
+            </div>
+            <div class="infoUser">
+                 <img src="assets/imgs/profile.webp" alt="Profile picture">
+                <div class="UserName">
+                    <span>
+                        <span class="name">Joe Doe</span>
+                        <img class="icon BlueCheck" title="Verified Account" src="assets/imgs/blueCheck.svg" alt="Blue Check Icon">
+                    </span>
+                    <span class="username">@joed12</span>
+                </div>
+            </div>
+            <div class="tabsDiv">
+                    <div class="home nav-item">
+                        <img class="icon" src="assets/imgs/home.svg" alt="Home Icon">
+                        <a class="nav-link{{#if homeActive}} activo {{/if}}" href="/">Home</a>
+                    </div>
+                    <div class="friends nav-item">
+                        <img class="icon" src="assets/imgs/friends.svg" alt="Friends Icon">
+                        <a class="nav-link {{#if friendsActive}}activo{{/if}}" href="#">Friends</a>
+                    </div>
+                    <div class="events nav-item">
+                        <img class="icon" src="assets/imgs/community.svg" alt="Events Icon">
+                        <a class="nav-link{{#if eventsActive}}activo{{/if}}" href="#">Events</a>
+                    </div>
+                    <div class="notification nav-item">
+                        <img class="icon" src="assets/imgs/bell.svg" alt="Notifications Icon">
+                        <a class="nav-link{{#if notificationActive}}activo{{/if}}" href="#">Notifications</a>
+                    </div>
+                    <div class="logOut nav-item">
+                        <img class="icon" src="assets/imgs/logout.svg" alt="Log Out Icon">
+                        <a class="nav-link" href="#">Log Out</a>
+                    </div>
+             </div>
+        </div>
+        <div class="hero">
+            {{{body}}}
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</body>
+</html>

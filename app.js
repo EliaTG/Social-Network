@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path")
 const expressHbs = require("express-handlebars");
 const {engine} = require("express-handlebars");
-// const sequelize = require("./util/database");
+const sequelize = require("./util/database");
+
 
 const app = express();
 
@@ -29,6 +30,12 @@ app.use(HomeRouter);
 
 app.use(ErrorController.Get404);
 
-app.listen(5050, () => {
-    console.log('App listening to port', 5050);
-})
+// app.listen(5050, () => {
+//     console.log('App listening to port', 5050);
+// })
+
+sequelize.sync().then(result=>{
+    app.listen(5050);
+  }).catch(err =>{
+      console.log(err);
+  })

@@ -1,0 +1,98 @@
+  <div class="main-container">
+  <form action="/"  method="POST"> 
+      <div class="posts">
+        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+        <div class="textareaDiv">
+                   <label for="content" class="form-label"></label>
+            <textarea required name="Content" id="content" cols="30" rows="10" placeholder="Start posting here!"></textarea> 
+
+        </div>
+        <button class="post" type="submit" >Send</button> 
+
+              
+      </div>
+         </form> 
+
+      {{#if hasPosts}}
+
+
+       {{#each post as |pos|}}
+
+ 
+   <div class="card col-md-10 bg-dark text-light mx-auto mt-5">
+
+      <div class="posts bg-dark">
+
+           <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+           <p class=" mt-5 "> joed12</p>
+ </div>
+
+
+
+    
+    <img src="{{pos.imagen}}" style="width: 100%; height:300px; object-fit:contain;"  class="card-img-top" alt="imagen">
+
+    <div class="card-body">
+        <h5 class="card-text">{{pos.content}}</h5>
+      
+
+  <div class="accordion bg-dark " id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button text-primary " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        comments
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+
+               {{#each ../comment as |com|}}
+ <div class="posts">
+ <ul class="list-group mb-3">
+   <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+<li class="list-group-item text-dark">{{com.comment}}</li>
+
+ </ul>
+ </div>
+
+ {{/each}}
+  
+
+    <form action="/comment"  method="POST"> 
+      <div class="posts">
+        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+     
+                   <label for="comment" class="form-label"></label>
+            <textarea required type="text" name="Comment" id="comment" cols="80" rows="2" placeholder="Start posting here!"></textarea>
+
+        <button class="post" type="submit" >Send</button> 
+
+              
+      </div>
+         </form> 
+
+      </div>
+       
+    </div>
+      
+        </div>
+     
+  </div>
+ 
+
+
+
+   </div>
+</div>
+  {{/each}}
+
+
+      {{else}}
+
+
+<h2 class=" text-center ">Not posted anything yet</h2>
+
+
+
+      {{/if}}
+</div>

@@ -1,14 +1,14 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../util/database");
 
-const Post = sequelize.define("post", {
+const Reply = sequelize.define("reply", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
     },
-    content: {
+    reply: {
         type: Sequelize.STRING,
         allowNull: false,
     },
@@ -22,4 +22,4 @@ const Post = sequelize.define("post", {
 
 });
 
-module.exports = Post;
+module.exports = Reply;

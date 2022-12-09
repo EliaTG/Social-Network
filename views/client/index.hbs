@@ -1,10 +1,172 @@
-<main>
+  <div class="main-container">
+  <form enctype="multipart/form-data" action="{{#if editMode}}/edit-post{{else}}/{{/if}}"  method="POST"> 
+      <div class="posts">
+        
+  {{#if editMode}}
+
+          <input type="hidden" value="{{post.id}}" name="postId">
+          
+          {{/if}}
+        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+        <div class="textareaDiv">
+                   <label for="content" class="form-label"></label>
+            <textarea required name="Content" id="content" cols="30" rows="10" placeholder="{{#if editMode}}{{post.content}}{{else}}Start posting here!{{/if}}" ></textarea> 
+
+       <div class="mb-3">
+          <label for="image-file" class="form-label">Ingrese una imagen:</label>
+          <input type="file" class="form-control" id="image-file" name="Image" />
+
+        </div>
+        </div>
+
+        <button class="post" type="submit" >{{#if editMode}}Edit{{else}}Post{{/if}}</button> 
+
+              
+      </div>
+         </form> 
+           {{#if editMode}}
+
+           {{else}}
+
+      {{#if hasPosts}}
+
+
+       {{#each post as |pos|}}
+
+ 
+   <div class="card col-md-10 bg-dark text-light mx-auto mt-5">
+
+      <div class="posts bg-dark">
+
+           <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+           <p class=" mt-5 "> joed12</p>
+ </div>
+
+
+    
+    <img src="{{pos.image}}" style="width: 100%; height:300px; object-fit:contain;"  class="card-img-top" alt="imagen">
+
+    <div class="card-body">
+      <p>{{pos.createdAt}}</p>
+        <h5 class="card-text">{{pos.content}} </h5>
+      
+
+  <div class="accordion bg-dark " id="{{pos.id}}">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        comments
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#{{pos.id}}">
+      <div class="accordion-body">
+       
+               {{#each ../comment as |com|}}
+                  {{#if (IgualValor pos.id com.postId) }}
+ <div class="posts">
+ <ul class="list-group mb-3">
+   <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+<li class="list-group-item text-dark">{{com.comment}}</li>
+
+
+  <div class="accordion bg-dark " id="accordionExample2">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="heading2">
+      <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+        Replys
+      </button>
+    </h2>
+    <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2" data-bs-parent="#accordionExample2">
+      <div class="accordion-body">
+
+             
+{{#each ../../reply as |rep|}}
+    {{#if (IgualValor com.id rep.commentId) }}         
+
+ <div class="posts">
+ <ul class="list-group mb-3">
+   <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+<li class="list-group-item text-dark">{{rep.reply}}</li>
+ </ul>
+ </div>
+{{/if}}
+{{/each}}
+
+  <form enctype="multipart/form-data" action="/reply"  method="POST"> 
+ <div class="posts">
+        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+        <div class="textareaDiv">
+ <input type="hidden" name="postId" value="{{pos.id}}" />
+  <input type="hidden" name="commentId" value="{{com.id}}" />
+
+                   <label for="reply" class="form-label"></label>
+            <textarea required name="Reply" id="reply" cols="30" rows="10" placeholder="Reply"></textarea> 
+
+   
+        </div>
+
+        <button class="post" type="submit" >Send</button> 
+
+              
+      </div>
+  </form>
+
+
+
+ </ul>
+ </div>
+ {{/if}}
+
+ {{/each}}
+  
+
+    <form action="/comment"  method="POST"> 
       <div class="posts">
         <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+      <input type="hidden" name="postId" value="{{pos.id}}" />
+                   <label for="comment" class="form-label"></label>
+            <textarea required type="text" name="Comment" id="comment" cols="80" rows="2" placeholder="Put your comment here!"></textarea>
 
-        <div class="textareaDiv">
-            <textarea name="" id="" cols="30" rows="10" placeholder="Start posting here!"></textarea>
-        </div>
+        <button class="post" type="submit" >Send</button> 
+
+              
       </div>
-                   
-</main>
+         </form> 
+
+      </div>
+         
+    </div>
+
+    <div style="display:flex;" >
+
+ 
+     <form id="form-delete" class="form-inline" action="/delete-post" method="POST">
+     <input type="hidden" name="postId" value="{{pos.id}}" />
+       <button  class="btn btn-danger mt-3 mx-3" type="submit" >Delete</button> 
+     </form>
+     <a  class=" btn btn-primary mt-3 text-light" href="/{{pos.id}}?edit=true">Edit</a>
+
+
+        </div>
+           </div>
+     
+  </div>
+ 
+
+
+
+   </div>
+</div>
+  {{/each}}
+
+
+      {{else}}
+
+
+<h2 class=" text-center ">Not posted anything yet</h2>
+
+
+
+      {{/if}}
+      {{/if}}
+</div>

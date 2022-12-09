@@ -3,4 +3,5 @@ const router = express.Router();
 
 const LoginController = require('../controllers/LoginController')
 
-router.get("login", LoginController.GetLogin);
+router.get("/login", LoginController.GetLogin);
+module.exports = router;

@@ -1,0 +1,74 @@
+ <div class="loginRegister signup">
+        <main>
+            <form action="/signup" method="post" class="formLogin signUpForm">
+                <h1 class="signuph1">Sign Up</h1>
+                 
+                   {{#if HasErrorMessages}}
+                    <div class="container">
+                            <div class="row">
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <ul>
+                                                {{#each errorsMessages}}
+                                                    <li>
+                                                        <span>
+                                                            {{this}}
+                                                        </span>
+                                                    </li>
+                                                {{/each}}
+                                            </ul>
+
+                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                            </div>
+                    </div>
+            {{/if}}
+                <div class="fullname">
+                    <div class="nameDiv">
+                        <label for="Name">Name</label>
+                        <input type="name" class="name" name="Name" id="" placeholder="Enter your Name" required>
+                    </div>
+                    <div class="lastNameDiv">
+                        <label for="LastName">LastName</label>
+                        <input type="name" class="LastName" name="LastName" id="" placeholder="Enter your LastName" required>
+                    </div>
+                </div>
+                <div class="userDiv">
+                    <label for="Username">Username</label>
+                    <input type="text" class="username" name="Username" id="" placeholder="Enter your username" required>
+                </div>
+
+                <div class="mb-3 imageDiv">
+                    <label for="Username">Image profile</label>
+                    <input type="file"  name="ImageFile" class="form-control" id="ImageFile">
+                </div>
+
+
+                <div class="userAndEmail">
+                    <div class="TelDiv">
+                        <label for="Tel">Tel</label>
+                        <input type="tel" class="tel" name="Tel" id="" placeholder="Enter your Telephone" required>
+                    </div>
+                    <div class="emailDiv">
+                        <label for="Email">Email</label>
+                        <input type="email" class="email" name="Email" id="" placeholder="Enter your email" required>
+                    </div>
+                </div>
+                <div class="passwordGroup">
+                    <div class="passDiv">
+                        <label for="Password">Password</label>
+                        <input type="password" class="pass" name="Password" id="" placeholder="Enter your password" required>
+                    </div>
+                    <div class="confirmPassDiv">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" class="confirmPass" name="confirmPassword" id="" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+                <button class="signUp">Sign Up</button>
+                <span class="singUpSpan">Do you have an account? <a href="/login" >Sign In</a> </span>
+
+            </form>
+            <div class="loginImg signUpImg">
+                <img src="assets/imgs/social.jpeg" alt="A group of friends hanging out">
+            </div>
+        </main>
+    </div>

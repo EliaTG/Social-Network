@@ -22,29 +22,32 @@ exports.GetIndex = (req, res, next) => {
 
                 const reply = result.map((result) => result.dataValues);
 
+                User.findAll().then((result) => {
 
 
-                res.render("client/index", {
-                    pageTitle: "Home",
-                    homeActive: true,
-                    post: posts,
-                    hasPosts: posts.length > 0,
-                    comment: comment,
-                    hasComments: comment.length > 0,
-                    reply: reply
+                    res.render("client/index", {
+                        pageTitle: "Home",
+                        homeActive: true,
+                        post: posts,
+                        hasPosts: posts.length > 0,
+                        comment: comment,
+                        hasComments: comment.length > 0,
+                        reply: reply
+                    });
+
+
+                }).catch((err) => {
+                    console.log(err);
                 });
-
 
             }).catch((err) => {
                 console.log(err);
-            });
-
+            });;
         }).catch((err) => {
             console.log(err);
         });;
-    }).catch((err) => {
-        console.log(err);
-    });;
+
+    });
 
 };
 

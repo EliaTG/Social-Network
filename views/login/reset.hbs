@@ -1,7 +1,7 @@
  <div class="loginRegister">
         <main>
-            <form action="/login" method="post" class="formLogin">
-                <h1>Hello again!</h1>
+            <form action="/reset" method="post" class="formLogin formReset">
+                <h1>Forgot password?</h1>
                 
                {{#if HasErrorMessages}}
                     <div class="container">
@@ -23,19 +23,16 @@
                     </div>
             {{/if}}
 
-                <span class="subTitle">Welcome back you've been missed!</span>
-                <div class="userDiv">
-                    <label for="Username">Username</label>  
-                    <input type="text" class="username" name="Username" id="username" placeholder="joe12" required>
+                <span class="subTitle">No worries, We'll send you reset instructions.</span>
+                <div class="emailDiv">
+                        <label for="Email">Email</label>
+                        <input type="email" class="email" name="Email" id="" placeholder="Enter your email" required>
                 </div>
-            <div class="passDiv">
-                <label for="Password">Password</label>
-                <input type="password" class="pass" name="Password" id="password" placeholder="Enter your password" required>
-            </div>
-                {{!-- <span class="forgotPass">Forgot password</span> --}}
-                 <span class="forgotPass"><a href="/reset" class="">Forgot password</a></span>
-                <button class="signIn">Sign in</button>
-                <span class="singUpSpan">Don't have an account? <a href="/signup" >Sign Up</a></span>
+                <button class="signIn">Reset password</button>
+                 <div class="back nav-item">
+                        <img class="icon" src="assets/imgs/arrow.png" alt="Events Icon">
+                        <span class="singUpSpan backSpan"><a href="/login" >Back to log in</a></span>
+                </div>
 
             </form>
             <div class="loginImg">

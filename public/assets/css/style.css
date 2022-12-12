@@ -121,6 +121,12 @@ body {
     color: white;
 }
 
+.formLogOut {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .logo {
     margin: 23px 0 35px 20px;
     display: flex;
@@ -197,17 +203,17 @@ img.BlueCheck {
 /* Login and Register */
 
 div.loginRegister {
-    height: 100%;
-    display: grid;
-    align-content: center;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
     justify-content: center;
     background-color: var(--LoginBackground);
 }
 
 .loginRegister main {
     display: flex;
-    justify-content: center;
-    width: 90vw;
+    margin: 5% 0 2% 0;
+    width: 80vw;
     height: 90vh;
     background-color: var(--white);
     box-shadow: -6px 6px 9px -1px rgba(153, 153, 153, 0.56);
@@ -231,18 +237,26 @@ div.loginRegister {
 }
 
 .emailDiv,
-.passDiv {
+.passDiv,
+.userDiv,
+.nameDiv,
+.lastNameDiv,
+.imageDiv,
+.TelDiv,
+.confirmPassDiv {
     display: flex;
     flex-direction: column;
 }
 
-input.email,
-input.pass {
+input.pass,
+input.username,
+input.confirmPass {
     height: 40px;
     padding: 0 20px;
     margin: 5px 0 20px 0;
     border: 2px solid var(--LoginBackground);
     color: #d6d4d1;
+    /* color: #d6d4d1; */
 }
 
 .formLogin h1 {
@@ -259,8 +273,36 @@ input.pass {
     margin: 5px 0 15px 0;
 }
 
+.subTitle {
+    margin: 5px 0 15px 0;
+}
+
+.forgotPass {
+    font-weight: bold;
+    color: #0e0f0e;
+    text-align: end;
+    margin: 10px 0 10px 0;
+    cursor: pointer;
+}
+
+.signIn,
+.signUp {
+    background-color: #0e0f0e;
+    color: white;
+    height: 35px;
+    font-size: 16px;
+    margin: 10px 0 10px 0;
+}
+
+
+/* Sign Up */
+
 .singUpSpan {
     color: #aeacaa;
+}
+
+.imageDiv {
+    margin: 0 0 10px 0;
 }
 
 .singUpSpan a {
@@ -270,20 +312,88 @@ input.pass {
     font-weight: bold;
 }
 
-span.forgotPass {
-    font-weight: bold;
-    color: #0e0f0e;
-    text-align: end;
-    margin: 0 0 10px 0;
-    cursor: pointer;
+.fullname,
+.userAndEmail,
+.passwordGroup {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+    width: 100%;
 }
 
-.signIn {
-    background-color: #0e0f0e;
-    color: white;
+fullname input,
+.userAndEmail input,
+.passwordGroup input {
     height: 35px;
-    font-size: 16px;
-    margin: 10px 0 10px 0;
+    padding: 0 20px;
+    margin: 5px 0 20px 0;
+    border: 2px solid var(--LoginBackground);
+}
+
+input.name,
+input.LastName,
+input.tel,
+input.email,
+input.pass,
+input.confirmPass {
+    margin: 0 5px;
+}
+
+.signup main {
+    width: 85vw;
+}
+
+.signuph1 {
+    margin: 0 0 15px 0;
+}
+
+.signUpForm {
+    width: 50%;
+}
+
+button.signUp {
+    margin: 20px 0 10px 0;
+}
+
+.signUpForm input.username {
+    height: 35px;
+    margin: 5px 0 10px 0;
+}
+
+.signUpImg {
+    width: 50%;
+}
+
+.forgotPass a {
+    text-decoration: none;
+    color: var(--black);
+    margin: 5px 0 0 0;
+}
+
+
+/* Reset */
+
+.formReset {
+    padding: 15px 25px;
+}
+
+input.email {
+    height: 35px;
+    padding: 0 20px;
+    margin: 5px 0 20px 0;
+    border: 2px solid var(--LoginBackground);
+}
+
+s .subTitle {
+    text-align: center;
+}
+
+.back {
+    text-align: center;
+}
+
+.formReset img.icon {
+    margin: 0 0 3px 0;
 }
 
 .post {
@@ -316,8 +426,6 @@ span.forgotPass {
     cursor: pointer;
     margin: 30px 30px 0 30px;
 }
-
-.textareaDiv {}
 
 .textareaDiv textarea {
     border: none;

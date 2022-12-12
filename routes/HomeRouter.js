@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const HomeController = require('../controllers/HomeController.js')
+const isAuth = require("../middlewares/is-auth");
 
-router.get("/", HomeController.GetIndex);
-router.post("/", HomeController.PostContent);
-router.post("/comment", HomeController.PostComment);
-router.post("/reply", HomeController.PostReply);
-router.post("/delete-post", HomeController.PostDeletePost);
-router.post("/edit-post", HomeController.PostEditPost);
-router.get("/:postId", HomeController.GetEditPost);
+router.get("/", isAuth, HomeController.GetIndex);
+router.post("/", isAuth, HomeController.PostContent);
+router.post("/comment", isAuth, HomeController.PostComment);
+router.post("/reply", isAuth, HomeController.PostReply);
+router.post("/delete-post", isAuth, HomeController.PostDeletePost);
+router.post("/edit-post", isAuth, HomeController.PostEditPost);
+router.get("/:postId", isAuth, HomeController.GetEditPost);
 module.exports = router;

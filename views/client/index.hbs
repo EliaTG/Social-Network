@@ -1,16 +1,18 @@
   <div class="main-container">
+   
   <form enctype="multipart/form-data" action="{{#if editMode}}/edit-post{{else}}/{{/if}}"  method="POST"> 
       <div class="posts">
-        
+   
   {{#if editMode}}
-
-          <input type="hidden" value="{{post.id}}" name="postId">
-          
+ 
+      
           {{/if}}
-        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+          
+        <img class="profile" src="{{user.profilePicture}}" alt="Profile picture">
         <div class="textareaDiv">
                    <label for="content" class="form-label"></label>
             <textarea required name="Content" id="content" cols="30" rows="10" placeholder="{{#if editMode}}{{post.content}}{{else}}Start posting here!{{/if}}" ></textarea> 
+
 
        <div class="mb-3">
           <label for="image-file" class="form-label">Ingrese una imagen:</label>
@@ -27,19 +29,21 @@
            {{#if editMode}}
 
            {{else}}
+           <input type="hidden" value="{{user.id}}" name="mainuserId">
+           <p>{{user.id}}</p>
+
 
       {{#if hasPosts}}
 
-
        {{#each post as |pos|}}
-
+{{#if (IgualValor ../user.id pos.userId)}}
  
    <div class="card col-md-10 bg-dark text-light mx-auto mt-5">
 
       <div class="posts bg-dark">
 
-           <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
-           <p class=" mt-5 "> joed12</p>
+           <img class="profile" src="{{../user.profilePicture}}" alt="Profile picture">
+           <p class=" mt-5 "> {{../user.userName}}</p>
  </div>
 
 
@@ -56,6 +60,7 @@
     <h2 class="accordion-header" id="headingOne">
       <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
         comments
+      
       </button>
     </h2>
     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#{{pos.id}}">
@@ -63,9 +68,17 @@
        
                {{#each ../comment as |com|}}
                   {{#if (IgualValor pos.id com.postId) }}
+
  <div class="posts">
  <ul class="list-group mb-3">
-   <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+   
+      <div class="posts ">
+
+
+   <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
+      <p class=" text-dark mt-5 "> {{../../user.userName}}</p>
+              
+      </div>
 <li class="list-group-item text-dark">{{com.comment}}</li>
 
 
@@ -85,16 +98,27 @@
 
  <div class="posts">
  <ul class="list-group mb-3">
-   <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
-<li class="list-group-item text-dark">{{rep.reply}}</li>
+
+       <div class="posts ">
+
+
+   <img class="profile" src="{{../../../user.profilePicture}}" alt="Profile picture">
+      <p class=" text-dark mt-5 "> {{../../../user.userName}}</p>
+              
+
+
+       </div>
+       <li class="list-group-item text-dark">{{rep.reply}}</li>
  </ul>
  </div>
 {{/if}}
 {{/each}}
 
   <form enctype="multipart/form-data" action="/reply"  method="POST"> 
+     <input type="hidden" value="{{../../user.id}}" name="reuserId">
  <div class="posts">
-        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+
+        <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
         <div class="textareaDiv">
  <input type="hidden" name="postId" value="{{pos.id}}" />
   <input type="hidden" name="commentId" value="{{com.id}}" />
@@ -122,7 +146,10 @@
 
     <form action="/comment"  method="POST"> 
       <div class="posts">
-        <img class="profile" src="assets/imgs/profile.webp" alt="Profile picture">
+            <h2 class=" bg-danger ">{{../user.id}}</h2>
+          <input type="hidden" value="{{../user.id}}" name="comUserId">
+     
+        <img class="profile" src="{{../user.profilePicture}}" alt="Profile picture">
       <input type="hidden" name="postId" value="{{pos.id}}" />
                    <label for="comment" class="form-label"></label>
             <textarea required type="text" name="Comment" id="comment" cols="80" rows="2" placeholder="Put your comment here!"></textarea>
@@ -141,6 +168,7 @@
 
  
      <form id="form-delete" class="form-inline" action="/delete-post" method="POST">
+        <input type="hidden" value="{{user.id}}" name="userId">
      <input type="hidden" name="postId" value="{{pos.id}}" />
        <button  class="btn btn-danger mt-3 mx-3" type="submit" >Delete</button> 
      </form>
@@ -157,6 +185,12 @@
 
    </div>
 </div>
+
+
+  {{else}}
+
+{{/if}}
+
   {{/each}}
 
 
@@ -168,5 +202,7 @@
 
 
       {{/if}}
+
+
       {{/if}}
 </div>

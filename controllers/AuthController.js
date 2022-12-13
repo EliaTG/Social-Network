@@ -1,5 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const Post = require("../models/Home");
+const Comment = require("../models/comments");
+const Reply = require("../models/reply");
+const { usuario } = require("../util/helpers/hbs/comparar");
 
 exports.GetLogin = (req, res, next) => {
     res.render("login/login", {
@@ -7,7 +11,12 @@ exports.GetLogin = (req, res, next) => {
         loginActive: true,
     });
 }
+
+
+let user3;
+
 exports.PostLogin = (req, res, next) => {
+    let Id;
     const username = req.body.Username;
     const password = req.body.Password;
 
@@ -17,6 +26,10 @@ exports.PostLogin = (req, res, next) => {
                 req.flash("error_msg", "User is invalid");
                 return res.redirect("/login")
             }
+            const user2 = user.dataValues;
+            user3 = user2;
+            usuario(user3);
+
             bcrypt
                 .compare(password, user.password)
                 .then((result) => {
@@ -25,7 +38,10 @@ exports.PostLogin = (req, res, next) => {
                         req.session.user = user;
                         return req.session.save(err => {
                             console.log(err);
-                            res.redirect("/")
+
+
+                            res.redirect("/");
+
                         })
                     }
                     req.flash("error_msg", "password is invalid");
@@ -80,12 +96,13 @@ exports.PostSignUp = (req, res, next) => {
     const name = req.body.Name;
     const lastname = req.body.LastName;
     const username = req.body.Username;
-    const profilePicture = req.body.ImageFile;
+    const profilePicture = req.file;
     const phone = req.body.Tel;
     const email = req.body.Email;
     const password = req.body.Password;
     const confirmPassword = req.body.confirmPassword;
 
+    console.log(profilePicture);
     if (password !== confirmPassword) {
         req.flash("error_msg", "password is not the same");
         return res.redirect("/signup");
@@ -105,7 +122,7 @@ exports.PostSignUp = (req, res, next) => {
                         name: name,
                         lastName: lastname,
                         userName: username,
-                        profilePicture: profilePicture,
+                        profilePicture: "/" + profilePicture.path,
                         phone: phone,
                         email: email,
                         password: hashedPassword,

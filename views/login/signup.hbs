@@ -1,6 +1,6 @@
  <div class="loginRegister signup">
         <main>
-            <form action="/signup" method="post" class="formLogin signUpForm">
+            <form enctype="multipart/form-data" action="/signup" method="post" class="formLogin signUpForm">
                 <h1 class="signuph1">Sign Up</h1>
                  
                    {{#if HasErrorMessages}}
@@ -38,8 +38,8 @@
                 </div>
 
                 <div class="mb-3 imageDiv">
-                    <label for="Username">Image profile</label>
-                    <input type="file"  name="ImageFile" class="form-control" id="ImageFile">
+                    <label for="image-file">Image profile</label>
+                        <input type="file" class="form-control" id="image-file" name="Image" />
                 </div>
 
 

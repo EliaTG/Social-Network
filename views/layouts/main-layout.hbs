@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="userImg">
-                                <img src="assets/imgs/profile.webp" alt="Profile picture">
+                                <img src="{{user.profilePicture}}" alt="Profile picture">
                             </div>
                         </div>
                     </div>
@@ -59,13 +59,13 @@
                             <h3>BeSocial</h3>
                         </div>
                         <div class="infoUser">
-                            <img src="assets/imgs/profile.webp" alt="Profile picture">
+                            <img src="{{user.profilePicture}}" alt="Profile picture">
                             <div class="UserName">
                                 <span>
-                                    <span class="name">Joe Doe</span>
+                                    <span class="name">{{user.name}}</span>
                                     <img class="icon BlueCheck" title="Verified Account" src="assets/imgs/blueCheck.svg" alt="Blue Check Icon">
                                 </span>
-                                <span class="username">@joed12</span>
+                                <span class="username">{{user.userName}}</span>
                             </div>
                         </div>
                         <div class="tabsDiv">

@@ -43,6 +43,8 @@ app.engine("hbs", expressHbs.engine({
     helpers: {
 
         IgualValor: comparador.IgualValor,
+        Usuario: comparador.usuario,
+        Result: comparador.result
 
     },
 

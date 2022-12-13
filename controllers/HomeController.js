@@ -2,8 +2,17 @@ const Post = require("../models/Home");
 const User = require("../models/User");
 const Comment = require("../models/comments");
 const Reply = require("../models/reply");
+const AuthController = require("../controllers/AuthController");
+const { result } = require("../util/helpers/hbs/comparar");
+
+let user = AuthController.user;
+
+
 
 exports.GetIndex = (req, res, next) => {
+
+
+    let user = result();
 
     Post.findAll({
         order: [
@@ -21,24 +30,29 @@ exports.GetIndex = (req, res, next) => {
             Reply.findAll({ include: [{ model: User }] }).then((result) => {
 
                 const reply = result.map((result) => result.dataValues);
+                User.findOne({ where: { id: user.id } })
+                    .then((result) => {
 
-                User.findAll().then((result) => {
+
+                        const user = result.dataValues;
 
 
-                    res.render("client/index", {
-                        pageTitle: "Home",
-                        homeActive: true,
-                        post: posts,
-                        hasPosts: posts.length > 0,
-                        comment: comment,
-                        hasComments: comment.length > 0,
-                        reply: reply
+                        res.render("client/index", {
+                            pageTitle: "Home",
+                            homeActive: true,
+                            post: posts,
+                            hasPosts: posts.length > 0,
+                            comment: comment,
+                            hasComments: comment.length > 0,
+                            reply: reply,
+                            user: user
+
+                        });
+
+
+                    }).catch((err) => {
+                        console.log(err);
                     });
-
-
-                }).catch((err) => {
-                    console.log(err);
-                });
 
             }).catch((err) => {
                 console.log(err);
@@ -46,15 +60,19 @@ exports.GetIndex = (req, res, next) => {
         }).catch((err) => {
             console.log(err);
         });;
-
     });
 
 };
+
 
 exports.PostContent = (req, res, next) => {
 
     const content = req.body.Content;
     const Image = req.file;
+    let user = result();
+
+    user = user.id;
+
 
     console.log(Image);
 
@@ -66,7 +84,7 @@ exports.PostContent = (req, res, next) => {
             content: content,
 
             image: "/",
-            UserId: 1
+            userId: user
 
         }).then((result) => {
 
@@ -83,7 +101,7 @@ exports.PostContent = (req, res, next) => {
             content: content,
 
             image: "/" + Image.path,
-            UserId: 1
+            userId: user
 
         }).then((result) => {
 
@@ -104,8 +122,7 @@ exports.PostComment = (req, res, next) => {
     const postId = req.body.postId;
     const comment = req.body.Comment;
     const Image = req.file;
-
-    const userId = req.body.userId;
+    const userId = req.body.comUserId;
 
     console.log(comment);
 
@@ -113,7 +130,7 @@ exports.PostComment = (req, res, next) => {
 
         comment: comment,
         image: "/",
-        userId: 2,
+        userId: userId,
         postId: postId
 
     }).then((result) => {
@@ -132,6 +149,7 @@ exports.PostReply = (req, res, next) => {
     const reply = req.body.Reply;
     const commentId = req.body.commentId;
     const Image = req.file;
+    const userId = req.body.reuserId;
 
     console.log(reply);
 
@@ -140,7 +158,7 @@ exports.PostReply = (req, res, next) => {
         commentId: commentId,
         reply: reply,
         image: "/",
-        userId: 2,
+        userId: userId,
         postId: postId
 
     }).then((result) => {
@@ -174,7 +192,6 @@ exports.GetEditPost = (req, res, next) => {
         .then((result) => {
             const post = result.dataValues;
 
-
             res.render("client/index", {
                 pageTitle: "Editar Post",
                 editMode: edit,
@@ -190,21 +207,19 @@ exports.PostEditPost = (req, res, next) => {
     const content = req.body.Content;
     const image = req.file;
     const postId = req.body.postId;
-    const userId = req.body.userId;
+    const userId = result();
 
     console.log(image);
 
     Post.findOne({ where: { id: postId } })
         .then((result) => {
 
-            const post = result.dataValues;
-
 
             if (image == undefined) {
                 let imagePath = "";
 
 
-                Post.update({ content: content, image: imagePath, userId: 1 }, { where: { id: postId } })
+                Post.update({ content: content, image: imagePath, userId: userId }, { where: { id: postId } })
                     .then((result) => {
                         return res.redirect("/");
                     })
@@ -214,7 +229,7 @@ exports.PostEditPost = (req, res, next) => {
             } else {
                 let imagePath = "/" + image.path;
 
-                Post.update({ content: content, image: imagePath, userId: 1 }, { where: { id: postId } })
+                Post.update({ content: content, image: imagePath, userId: userId }, { where: { id: postId } })
                     .then((result) => {
                         return res.redirect("/");
                     })

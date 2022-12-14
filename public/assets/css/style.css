@@ -146,7 +146,7 @@ body {
 
 .infoUser {
     background-color: var(--info);
-    margin: 20px 20px 30px 20px;
+    margin: 21px 20px 30px 20px;
     border-radius: 7px;
     width: 200px;
     padding: 10px;
@@ -296,7 +296,6 @@ input.confirmPass {
 
 
 /* Sign Up */
-
 .singUpSpan {
     color: #aeacaa;
 }
@@ -321,7 +320,7 @@ input.confirmPass {
     width: 100%;
 }
 
-fullname input,
+.fullname input,
 .userAndEmail input,
 .passwordGroup input {
     height: 35px;
@@ -372,7 +371,6 @@ button.signUp {
 
 
 /* Reset */
-
 .formReset {
     padding: 15px 25px;
 }
@@ -384,10 +382,9 @@ input.email {
     border: 2px solid var(--LoginBackground);
 }
 
-s .subTitle {
+.subTitle {
     text-align: center;
 }
-
 .back {
     text-align: center;
 }
@@ -396,51 +393,158 @@ s .subTitle {
     margin: 0 0 3px 0;
 }
 
-.post {
-    background-color: #116399;
-    color: white;
-    height: 45px;
-    width: 40%;
-    margin-top: 60px;
-    font-size: 16px;
-    margin-bottom: 50px;
-}
 
 
 /* Index */
-
-.posts {
+.main-container{
+    margin: 11vh auto 0 31px;
+}
+.formPosts{
+    background-color: var(--info);
+    border-radius: 7px;
+    margin: 0;
+}
+.posts{
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 7px;
     margin: 30px auto;
-    width: 90%;
-    background-color: var(--HomeBackground);
-    display: flex;
-    flex-direction: row;
+    width: 740px;
 }
-
-.posts .profile {
+button.post{
+    background-color: #3080ED;
+    color: white;
+    height: 35px;
+    width: 130px;
+    margin-top: 60px;
+    font-size: 16px;
+    border: none;
+    margin: auto 10px auto 15px;
+}
+img.profile {
     height: 45px;
     width: 45px;
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-    margin: 30px 30px 0 30px;
+    margin: auto 15px auto 20px;
 }
 
-.textareaDiv textarea {
+.textareaDiv textarea, textarea#comment {
     border: none;
     padding: 0 10px;
     color: var(--grey);
-    background-color: var(--info);
-    border-radius: 7px;
+    background-color: var(--HomeBackground);
+    border-radius: 20px;
     width: 500px;
-    height: 50px;
-    margin: 30px 30px 0 0;
+    height: 35px;
+    margin: auto 0;
+    padding: 5px 0 0 15px;
 }
-
-
+.line{
+    width: 95%;
+    border-bottom:1px solid var(--LoginBackground);
+    margin: 0 auto 10px auto;
+}
+.uploadImg{
+    cursor: pointer;
+}
+.topPost{
+    display: flex;
+    justify-content: center;
+    height: 80px;
+}
+/* Upload Image */
+.fileContainer{
+    display: flex;
+    align-items: center;
+}
+input#image-file{
+    z-index: 0;
+    margin: 0 0 0 10px;
+    visibility: hidden;
+}
+#uploadIcon{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 0 0 30px;
+    z-index: 1;
+    cursor: pointer;
+}
+.imgSpan{
+    margin: 0 0 0 5px;
+}
+/* Save post */
+.savePost{
+    width: 100%;
+    margin: 15px 0;
+    background-color: var(--info);
+}
+.card{
+    border: none;
+}
+.postImage{
+    max-height: 400px;
+    height: 400px;
+    width: 300px;
+    object-fit: cover;
+    width: 90%;
+    margin: 0 auto 10px auto;
+    border-radius: 7px;
+}
+.infoPost{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 10px 10px 10px;
+    margin-bottom: 12px;
+}
+.postName{
+    margin: 0;
+}
+.content{
+    padding: 4px 40px 16px 40px;
+    margin: 0;
+}
+.content p{
+    margin: 0;
+}
+.timeago{
+    margin: 0 5% 0 0;
+}
+.profileAndName{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 20px;
+}
+.editButton{
+    background-color: #3080ED;
+    color: white;
+    height: 35px;
+    width: 80px;
+    margin: 0 0 0 15px;
+}
+.postsComments{
+    /* border: 1px solid red; */
+    height: 140px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    border-radius: 7px;
+    margin: 30px auto;
+    width: 740px;
+}
 /* 404 not found */
-
 div.notfound {
     display: flex;
     justify-content: center;

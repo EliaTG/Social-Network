@@ -1,3 +1,4 @@
+
 exports.IgualValor = (value, EqualValue) => {
 
     return value === EqualValue;
@@ -18,3 +19,9 @@ exports.result = () => {
 
     return valor;
 }
+
+
+
+
+
+

@@ -14,6 +14,13 @@ const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 
 const comparador = require("./util/helpers/hbs/comparar");
+const getDate = require("./util/helpers/hbs/GetData");
+// const getDataHelpers = require("./util/helpers/GetData");
+
+
+// const moment = require('moment');
+// moment.utc(createdAt).local().format('MM/DD/YYYY, h:mm a');
+// console.log(moment);
 
 const app = express();
 // const morgan = require('morgan')
@@ -41,11 +48,10 @@ app.engine("hbs", expressHbs.engine({
     defaultLayout: "main-layout",
     extname: 'hbs',
     helpers: {
-
         IgualValor: comparador.IgualValor,
         Usuario: comparador.usuario,
-        Result: comparador.result
-
+        Result: comparador.result,
+        getDate: getDate.getDate,  
     },
 
 }, ))
@@ -81,32 +87,19 @@ app.use(flash());
 
 
 // app.use(bodyparser.urlencoded({extended: true}))
-
-// app.use(
-//   session({
-//     secret: "besocialNetwork",
-//     saveUninitialized: false,
-//     resave: false,
-//     maxAge: 60000000,
-//     cookie: {maxAge: 60000000},
-// store: new SequelizeStore({
-//     db: sequelize,
-// }),
-// })
-// );
-
 // app.use(morgan('dev'));
-// app.use(express.json());
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// app.use((req, res, next) => {
-//     res.locals.error_msg = req.flash('error_msg');
-//     res.locals.success_msg = req.flash('success_msg');
-//     next();
-// })
 
 
+// Global variables
+app.use((req, res, next) => {
+    const errors = req.flash("error_msg");
+
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.errorsMessages = errors;
+    res.locals.HasErrorMessages = errors.length > 0;
+
+    next();
+})
 
 //Routes
 app.use(AuthRouter);

@@ -102,7 +102,7 @@ exports.PostSignUp = (req, res, next) => {
     const password = req.body.Password;
     const confirmPassword = req.body.confirmPassword;
 
-    console.log(profilePicture);
+    // console.log(profilePicture);
     if (password !== confirmPassword) {
         req.flash("error_msg", "password is not the same");
         return res.redirect("/signup");

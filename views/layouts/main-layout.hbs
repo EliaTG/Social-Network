@@ -47,7 +47,7 @@
                             </div>
 
                             <div class="userImg">
-                                <img src="{{user.profilePicture}}" alt="Profile picture">
+                                <img src="{{user.profilePicture}}" alt="{{user.name}}'s profile picture">
                             </div>
                         </div>
                     </div>
@@ -59,13 +59,13 @@
                             <h3>BeSocial</h3>
                         </div>
                         <div class="infoUser">
-                            <img src="{{user.profilePicture}}" alt="Profile picture">
+                            <img src="{{user.profilePicture}}" alt="{{user.name}}'s profile">
                             <div class="UserName">
                                 <span>
                                     <span class="name">{{user.name}}</span>
                                     <img class="icon BlueCheck" title="Verified Account" src="assets/imgs/blueCheck.svg" alt="Blue Check Icon">
                                 </span>
-                                <span class="username">{{user.userName}}</span>
+                                <span class="username">@{{user.userName}}</span>
                             </div>
                         </div>
                         <div class="tabsDiv">
@@ -88,8 +88,7 @@
                                 <div class="logOut nav-item">
 
                                     <form action="/logout" class="formLogOut" method="POST">
-                                        <img class="icon" src="assets/imgs/logout.svg" alt="Log Out Icon">
-                                        {{!-- <a class="nav-link" href="#">Log Out</a> --}}
+                                        <img class="icon" src="assets/imgs/logout.svg" alt="Log Out Icon"> 
                                         <button class="nav-link" type="submit">Log Out</button>
                                     </form>
                                 </div>
@@ -99,26 +98,6 @@
             {{!-- {{/if}} --}}
     {{/if}}
         <div class="hero"> 
-            {{!-- {{#if HasErrorMessages}}
-                    <div class="container">
-                            <div class="row">
-                                <div class="col-md-4 mx-auto">
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <ul>
-                                                {{#each errorsMessages}}
-                                                    <li>
-                                                        {{this}}
-                                                    </li>
-                                                {{/each}}
-                                            </ul>
-                                        <button  type="button" class="close" data-dismiss="alert" aria-label="Close" >
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-            {{/if}} --}}
             {{{body}}}
         </div>
     <script src="assets/js/bootstrap/bootstrap.js"></script>

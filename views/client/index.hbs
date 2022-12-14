@@ -1,88 +1,90 @@
   <div class="main-container">
    
-  <form enctype="multipart/form-data" action="{{#if editMode}}/edit-post{{else}}/{{/if}}"  method="POST"> 
+  <form enctype="multipart/form-data" action="{{#if editMode}}/edit-post{{else}}/{{/if}}"  method="POST" class="formPosts"> 
       <div class="posts">
-   
-  {{#if editMode}}
- 
-      
+          {{#if editMode}}
           {{/if}}
           
-        <img class="profile" src="{{user.profilePicture}}" alt="Profile picture">
-        <div class="textareaDiv">
-                   <label for="content" class="form-label"></label>
-            <textarea required name="Content" id="content" cols="30" rows="10" placeholder="{{#if editMode}}{{post.content}}{{else}}Start posting here!{{/if}}" ></textarea> 
-
-
-       <div class="mb-3">
-          <label for="image-file" class="form-label">Ingrese una imagen:</label>
-          <input type="file" class="form-control" id="image-file" name="Image" />
-
-        </div>
-        </div>
-
-        <button class="post" type="submit" >{{#if editMode}}Edit{{else}}Post{{/if}}</button> 
-
-              
+          <div class="textareaDiv">
+              <div class="topPost">
+                <img class="profile" src="{{user.profilePicture}}" alt="{{user.name}}'s profile">
+                <textarea required name="Content" id="content" cols="30" rows="10" placeholder="{{#if editMode}}{{post.content}}{{else}}What are you thinking, {{user.name}}? {{/if}}" ></textarea> 
+                <button class="post" type="submit" >{{#if editMode}}Edit{{else}}Post{{/if}}</button>    
+              </div>
+              <div class="line"></div>   
+              <div class="mb-3 uploadImg" >
+                  <label class="fileContainer">
+                      <span id="uploadIcon">
+                          <img src="assets/imgs/uploadImg.png" alt="Uploading images icon" srcset="">
+                          <span class="imgSpan">Image</span>
+                     </span>
+                     <input type="file" class="form-control" id="image-file" name="Image" />
+                  </label>
+              </div>
+          </div>
       </div>
-         </form> 
+    </form> 
            {{#if editMode}}
 
            {{else}}
            <input type="hidden" value="{{user.id}}" name="mainuserId">
-           <p>{{user.id}}</p>
-
-
+           {{!-- <p>{{user.id}}</p> --}}
       {{#if hasPosts}}
 
        {{#each post as |pos|}}
-{{#if (IgualValor ../user.id pos.userId)}}
+       {{#if (IgualValor ../user.id pos.userId)}}
  
-   <div class="card col-md-10 bg-dark text-light mx-auto mt-5">
+   <div class="savePost card">
+      <div class="infoPost">
+          <div class="profileAndName">
+              <img class="profile" src="{{../user.profilePicture}}" alt="{{user.name}}'s profile"> 
+              <p class="postName"> {{../user.userName}}</p>
+          </div>
+          <span class="timeago">{{getDate pos.createdAt}}</span>          
+      </div>
+      <div class="content">
+          <p class="">{{pos.content}} </p>
+      </div>
+      <img src="{{pos.image}}"  class="card-img-top postImage" alt="imagen">
 
-      <div class="posts bg-dark">
+      <div class="card-body">
+     
+        
+      {{!-- Delete and Edit buttons --}}
+      <div class="buttons">
+          <form id="form-delete" class="form-inline" action="/delete-post" method="POST">
+                  <input type="hidden" value="{{user.id}}" name="userId">
+                  <input type="hidden" name="postId" value="{{pos.id}}" />
+                <button  class="btn btn-danger" type="submit" >Delete</button> 
+          </form>
+          <a  class=" btn editButton text-light" href="/{{pos.id}}?edit=true">Edit</a>
+      </div>
 
-           <img class="profile" src="{{../user.profilePicture}}" alt="Profile picture">
-           <p class=" mt-5 "> {{../user.userName}}</p>
- </div>
-
-
-    
-    <img src="{{pos.image}}" style="width: 100%; height:300px; object-fit:contain;"  class="card-img-top" alt="imagen">
-
-    <div class="card-body">
-      <p>{{pos.createdAt}}</p>
-        <h5 class="card-text">{{pos.content}} </h5>
-      
-
-  <div class="accordion bg-dark " id="{{pos.id}}">
-  <div class="accordion-item">
-    <h2 class="accordion-header" id="headingOne">
-      <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        comments
-      
-      </button>
-    </h2>
-    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#{{pos.id}}">
-      <div class="accordion-body">
-       
-               {{#each ../comment as |com|}}
-                  {{#if (IgualValor pos.id com.postId) }}
+    <div class="accordion" id="{{pos.id}}">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          comments
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#{{pos.id}}">
+        <div class="accordion-body">
+        
+                {{#each ../comment as |com|}}
+                    {{#if (IgualValor pos.id com.postId) }}
 
  <div class="posts">
- <ul class="list-group mb-3">
-   
+    <ul class="list-group mb-3">
       <div class="posts ">
 
 
-   <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
-      <p class=" text-dark mt-5 "> {{../../user.userName}}</p>
-              
+      <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
+      <p class=" text-dark mt-5 "> {{../../user.userName}}</p>     
       </div>
-<li class="list-group-item text-dark">{{com.comment}}</li>
+      <li class="list-group-item text-dark">{{com.comment}}</li>
 
 
-  <div class="accordion bg-dark " id="accordionExample2">
+  <div class="accordion " id="accordionExample2">
   <div class="accordion-item">
     <h2 class="accordion-header" id="heading2">
       <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
@@ -90,27 +92,23 @@
       </button>
     </h2>
     <div id="collapse2" class="accordion-collapse collapse show" aria-labelledby="heading2" data-bs-parent="#accordionExample2">
-      <div class="accordion-body">
+      <div class="accordion-body">    
+      {{#each ../../reply as |rep|}}
+          {{#if (IgualValor com.id rep.commentId) }}         
 
-             
-{{#each ../../reply as |rep|}}
-    {{#if (IgualValor com.id rep.commentId) }}         
+        <div class="">
+                  <ul class="list-group mb-3">
+                        <div class="replys">
+                            <div class="profileAndName">
+                                <img class="profile" src="{{../../../user.profilePicture}}" alt="Profile picture">
+                                <p class=" text-dark mt-5 "> {{../../../user.userName}}</p> 
+                            </div>
+                            {{!-- <span class="timeago">{{getDate pos.createdAt}}</span>  --}}
 
- <div class="posts">
- <ul class="list-group mb-3">
-
-       <div class="posts ">
-
-
-   <img class="profile" src="{{../../../user.profilePicture}}" alt="Profile picture">
-      <p class=" text-dark mt-5 "> {{../../../user.userName}}</p>
-              
-
-
-       </div>
-       <li class="list-group-item text-dark">{{rep.reply}}</li>
- </ul>
- </div>
+                        </div>
+                        <li class="content text-dark">{{rep.reply}}</li>
+                  </ul>
+        </div>
 {{/if}}
 {{/each}}
 
@@ -120,7 +118,7 @@
 
         <img class="profile" src="{{../../user.profilePicture}}" alt="Profile picture">
         <div class="textareaDiv">
- <input type="hidden" name="postId" value="{{pos.id}}" />
+  <input type="hidden" name="postId" value="{{pos.id}}" />
   <input type="hidden" name="commentId" value="{{com.id}}" />
 
                    <label for="reply" class="form-label"></label>
@@ -154,7 +152,7 @@
                    <label for="comment" class="form-label"></label>
             <textarea required type="text" name="Comment" id="comment" cols="80" rows="2" placeholder="Put your comment here!"></textarea>
 
-        <button class="post" type="submit" >Send</button> 
+        <button class="post " type="submit" >Send</button> 
 
               
       </div>
@@ -167,12 +165,8 @@
     <div style="display:flex;" >
 
  
-     <form id="form-delete" class="form-inline" action="/delete-post" method="POST">
-        <input type="hidden" value="{{user.id}}" name="userId">
-     <input type="hidden" name="postId" value="{{pos.id}}" />
-       <button  class="btn btn-danger mt-3 mx-3" type="submit" >Delete</button> 
-     </form>
-     <a  class=" btn btn-primary mt-3 text-light" href="/{{pos.id}}?edit=true">Edit</a>
+    
+    
 
 
         </div>
@@ -185,24 +179,11 @@
 
    </div>
 </div>
-
-
   {{else}}
-
 {{/if}}
-
   {{/each}}
-
-
       {{else}}
-
-
-<h2 class=" text-center ">Not posted anything yet</h2>
-
-
-
+    <h2 class=" text-center ">Not posted anything yet</h2>
       {{/if}}
-
-
       {{/if}}
 </div>

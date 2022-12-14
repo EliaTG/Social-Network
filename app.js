@@ -98,28 +98,28 @@ User.hasMany(Reply);
 Reply.belongsTo(Post, { constraint: true, onDelete: "CASCADE" });
 Post.hasMany(Reply);
 
-FriendRequest.belongsTo(User,{constraint:true,foreignKey:"userFirstId",as:"friendRequestByMe"});
-FriendRequest.belongsTo(User,{constraint:true,foreignKey:"userSecondId",as:"FriendRequestByOther"})
-User.hasMany(FriendRequest,{
-    foreignKey:'userFirstId',
+FriendRequest.belongsTo(User, { constraint: true, foreignKey: "userFirstId", as: "friendRequestByMe" });
+FriendRequest.belongsTo(User, { constraint: true, foreignKey: "userSecondId", as: "FriendRequestByOther" })
+User.hasMany(FriendRequest, {
+    foreignKey: 'userFirstId',
 });
 
-User.hasMany(FriendRequest,{
-    foreignKey:'userSecondId'
+User.hasMany(FriendRequest, {
+    foreignKey: 'userSecondId'
 });
 
-Friend.belongsTo(User,{constraint:true,foreignKey:"userFirstId",as:"friendRequestByMe"});
-Friend.belongsTo(User,{constraint:true,foreignKey:"userSecondId",as:"FriendRequestByOther"})
-User.hasMany(Friend,{
-    foreignKey:'userFirstId',
+Friend.belongsTo(User, { constraint: true, foreignKey: "userFirstId", as: "friendRequestByMe" });
+Friend.belongsTo(User, { constraint: true, foreignKey: "userSecondId", as: "FriendRequestByOther" })
+User.hasMany(Friend, {
+    foreignKey: 'userFirstId',
 });
 
-User.hasMany(Friend,{
-    foreignKey:'userSecondId'
+User.hasMany(Friend, {
+    foreignKey: 'userSecondId'
 });
 
 sequelize.sync({ alter: true }).then(result => {
-    app.listen(5052);
+    app.listen(5050);
 }).catch(err => {
     console.log(err);
 })

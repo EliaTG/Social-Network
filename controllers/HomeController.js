@@ -4,6 +4,7 @@ const Comment = require("../models/comments");
 const Reply = require("../models/reply");
 const AuthController = require("../controllers/AuthController");
 const { result } = require("../util/helpers/hbs/comparar");
+const counter = require("../util/helpers/Notifications");
 
 let user = AuthController.user;
 
@@ -31,11 +32,11 @@ exports.GetIndex = (req, res, next) => {
 
                 const reply = result.map((result) => result.dataValues);
                 User.findOne({ where: { id: user.id } })
-                    .then((result) => {
+                    .then(async (result) => {
 
 
                         const user = result.dataValues;
-
+                        const notification = await counter.CountNotifications(user.id).then(r=>{return r})
 
                         res.render("client/index", {
                             pageTitle: "Home",
@@ -45,7 +46,8 @@ exports.GetIndex = (req, res, next) => {
                             comment: comment,
                             hasComments: comment.length > 0,
                             reply: reply,
-                            user: user
+                            user: user,
+                            notifications:notification
 
                         });
 

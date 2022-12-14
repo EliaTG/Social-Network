@@ -18,8 +18,11 @@ const Post = sequelize.define("post", {
         type: Sequelize.STRING,
         allowNull: true,
 
+    },
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
-
 });
 
 module.exports = Post;

@@ -18,8 +18,15 @@ const Comment = sequelize.define("comments", {
         type: Sequelize.STRING,
         allowNull: true,
 
+    },
+    userId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+    },
+    postId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
     }
-
 });
 
 module.exports = Comment;

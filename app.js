@@ -65,6 +65,17 @@ app.use(session({
 }))
 app.use(flash());
 
+//Global variable
+app.use((req, res, next) => {
+    const errors = req.flash("error_msg");
+
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.errorsMessages = errors;
+    res.locals.HasErrorMessages = errors.length > 0;
+
+    next();
+})
+
 const HomeRouter = require('./routes/HomeRouter');
 const AuthRouter = require("./routes/AuthRouter");
 const NotificationRouter = require('./routes/NotificationsRouter');
@@ -119,6 +130,8 @@ User.hasMany(Friend, {
 User.hasMany(Friend, {
     foreignKey: 'userSecondId'
 });
+
+
 
 sequelize.sync({ alter: true }).then(result => {
     app.listen(5052);

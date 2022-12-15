@@ -5,36 +5,24 @@ const { engine } = require("express-handlebars");
 const sequelize = require("./util/database");
 const session = require("express-session");
 const flash = require('connect-flash');
-
 const User = require("./models/User");
 const Post = require("./models/Home");
 const Comment = require("./models/comments");
 const Reply = require("./models/reply");
+const FriendRequest = require('./models/friendRequest');
+const Friend = require('./models/friends');
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
+
+
 
 const comparador = require("./util/helpers/hbs/comparar");
 
 const app = express();
-// const morgan = require('morgan')
-// const passport = require('passport');
-// const bodyparser = require('body-parser');
 
-const HomeRouter = require('./routes/HomeRouter');
-const AuthRouter = require("./routes/AuthRouter")
 
 const ErrorController = require("./controllers/ErrorController")
-    // Initalize sequelize with session store
-    // const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-
-
-
-// // Initialization
-// const app = express();
-// require('./util/passport');
-
-// Settings
 
 app.engine("hbs", expressHbs.engine({
     layoutsDir: "views/layouts/",
@@ -54,8 +42,6 @@ app.set("views", "views");
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-
-//Multer
 app.use("/imgs", express.static(path.join(__dirname, "imgs")));
 
 const imageStorage = multer.diskStorage({
@@ -71,7 +57,7 @@ const imageStorage = multer.diskStorage({
 });
 
 app.use(multer({ storage: imageStorage }).single("Image"));
-//Middleware
+
 app.use(session({
     secret: "besocialNetwork",
     saveUninitialized: false,
@@ -79,51 +65,42 @@ app.use(session({
 }))
 app.use(flash());
 
+//Global variable
+app.use((req, res, next) => {
+    const errors = req.flash("error_msg");
 
-// app.use(bodyparser.urlencoded({extended: true}))
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.errorsMessages = errors;
+    res.locals.HasErrorMessages = errors.length > 0;
 
-// app.use(
-//   session({
-//     secret: "besocialNetwork",
-//     saveUninitialized: false,
-//     resave: false,
-//     maxAge: 60000000,
-//     cookie: {maxAge: 60000000},
-// store: new SequelizeStore({
-//     db: sequelize,
-// }),
-// })
-// );
+    next();
+})
 
-// app.use(morgan('dev'));
-// app.use(express.json());
-// app.use(passport.initialize());
-// app.use(passport.session());
+const HomeRouter = require('./routes/HomeRouter');
+const AuthRouter = require("./routes/AuthRouter");
+const NotificationRouter = require('./routes/NotificationsRouter');
+const FriendRouter = require('./routes/FriendRouter');
 
-// app.use((req, res, next) => {
-//     res.locals.error_msg = req.flash('error_msg');
-//     res.locals.success_msg = req.flash('success_msg');
-//     next();
-// })
-
-
-
-//Routes
 app.use(AuthRouter);
+app.use(FriendRouter);
+app.use(NotificationRouter);
 app.use(HomeRouter);
 
 app.use(ErrorController.Get404);
 
+// app.listen(5050, () => {
+//     console.log('App listening to port', 5050);
+// })
 
 // Relations
-Post.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
-User.hasMany(Post);
+Post.belongsTo(User, { constraint: true, onDelete: "CASCADE", foreignKey: "userId" });
+User.hasMany(Post, { foreignKey: "userId" });
 
-Comment.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
-User.hasMany(Comment);
+Comment.belongsTo(User, { constraint: true, onDelete: "CASCADE", foreignKey: "userId" });
+User.hasMany(Comment, { foreignKey: "userId" });
 
-Comment.belongsTo(Post, { constraint: true, onDelete: "CASCADE" });
-Post.hasMany(Comment);
+Comment.belongsTo(Post, { constraint: true, onDelete: "CASCADE", foreignKey: "postId" });
+Post.hasMany(Comment, { foreignKey: "postId" });
 
 Reply.belongsTo(Comment, { constraint: true, onDelete: "CASCADE" });
 Comment.hasMany(Reply);
@@ -134,8 +111,30 @@ User.hasMany(Reply);
 Reply.belongsTo(Post, { constraint: true, onDelete: "CASCADE" });
 Post.hasMany(Reply);
 
-sequelize.sync({ alter: false }).then(result => {
-    app.listen(5050);
+FriendRequest.belongsTo(User, { constraint: true, foreignKey: "userFirstId", as: "friendRequestByMe" });
+FriendRequest.belongsTo(User, { constraint: true, foreignKey: "userSecondId", as: "FriendRequestByOther" })
+User.hasMany(FriendRequest, {
+    foreignKey: 'userFirstId',
+});
+
+User.hasMany(FriendRequest, {
+    foreignKey: 'userSecondId'
+});
+
+Friend.belongsTo(User, { constraint: true, foreignKey: "userFirstId", as: "friendByMe" });
+Friend.belongsTo(User, { constraint: true, foreignKey: "userSecondId", as: "FriendByOther" })
+User.hasMany(Friend, {
+    foreignKey: 'userFirstId'
+});
+
+User.hasMany(Friend, {
+    foreignKey: 'userSecondId'
+});
+
+
+
+sequelize.sync({ alter: true }).then(result => {
+    app.listen(5052);
 }).catch(err => {
     console.log(err);
 })

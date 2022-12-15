@@ -4,6 +4,7 @@ const Comment = require("../models/comments");
 const Reply = require("../models/reply");
 const AuthController = require("../controllers/AuthController");
 const { result } = require("../util/helpers/hbs/comparar");
+const counter = require("../util/helpers/Notifications");
 
 let user = AuthController.user;
 
@@ -31,11 +32,11 @@ exports.GetIndex = (req, res, next) => {
 
                 const reply = result.map((result) => result.dataValues);
                 User.findOne({ where: { id: user.id } })
-                    .then((result) => {
+                    .then(async (result) => {
 
 
                         const user = result.dataValues;
-
+                        const notification = await counter.CountNotifications(user.id).then(r => { return r })
 
                         res.render("client/index", {
                             pageTitle: "Home",
@@ -45,7 +46,8 @@ exports.GetIndex = (req, res, next) => {
                             comment: comment,
                             hasComments: comment.length > 0,
                             reply: reply,
-                            user: user
+                            user: user,
+                            notifications: notification
 
                         });
 
@@ -206,8 +208,8 @@ exports.GetEditPost = (req, res, next) => {
 exports.PostEditPost = (req, res, next) => {
     const content = req.body.Content;
     const image = req.file;
-    const postId = req.body.postId;
-    const userId = result();
+    const postId = Number(req.body.postId);
+    const user = result();
 
     console.log(image);
 
@@ -219,7 +221,7 @@ exports.PostEditPost = (req, res, next) => {
                 let imagePath = "";
 
 
-                Post.update({ content: content, image: imagePath, userId: userId }, { where: { id: postId } })
+                Post.update({ content: content, image: imagePath, userId: user.id }, { where: { id: postId } })
                     .then((result) => {
                         return res.redirect("/");
                     })

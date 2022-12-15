@@ -1,0 +1,27 @@
+<div class="container-fluid mt-5">
+        {{#if hasNotifications}}
+        {{#each request}}
+            <div class="card mb-3">
+                <div class="card-body d-flex justify-content-between">
+                    <div class="container">
+                        <img src="{{friendRequestByMe.dataValues.profilePicture}}" class="rounded-circle me-2" style="width: 15%"/><span>{{friendRequestByMe.dataValues.name}} {{friendRequestByMe.dataValues.lastName}}</span></div>
+                    <div class="container d-flex justify-content-around">
+                        <form action="/add-friend" method="post">
+                        <input type="hidden" name="id" id="id" value="{{id}}"/>
+                        <input type="hidden" name="userFirstId" id="userFirstId" value="{{userFirstId}}"/>
+                        <input type="hidden" name="userSecondId" id="userSecondId" value="{{userSecondId}}"/>
+                        <button type="submit" class="btn btn-success rounded-circle">Add</button>
+                        </form>
+                        <form action="/notification" method="post">
+                        <input type="hidden" name="id" id="id" value="{{id}}"/>
+                        <button type="submit" class="btn btn-danger rounded-circle">X</button>
+                        </form>
+                        <!--<h1>{{friendRequestByMe.dataValues.name}}</h1>!-->
+                        </div>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+    <h4>No tienes notificaciones</h4>
+    {{/if}}
+</div>

@@ -1,65 +1,24 @@
-<div class="main-container">
+<div class="container mt-5">
+    <div class="row">
 
-  <form enctype="multipart/form-data" action="{{#if editMode}}/edit-post{{else}}/{{/if}}" method="POST">
-    <div class="posts">
+            {{#if hasPosts}}
+            {{#each posts as |pos|}}
+                       <div class="col-md-7 mt-4 mx-5 "  >
+            <div class="card bg-dark text-light  mt-5 " >
+                <div class="posts bg-dark" >
+                    <img class="profile" src="{{user.profilePicture}}" />
+                    <p class=" mt-5 ">{{user.userName}}</p>
+                </div>
+                <img src="{{image}}" style="width: 87%; height:300px; object-fit:contain;" alt="imagen"
+                    class="ms-5 me-5">
+                <div class="card-body">
+                    <p>{{createdAt}}</p>
+                    <h5 class="card-text">{{content}} </h5>
+                </div>
+            
+           
 
-      {{#if editMode}}
-
-
-      {{/if}}
-
-      <img class="profile" src="{{user.profilePicture}}" alt="Profile picture">
-      <div class="textareaDiv">
-        <label for="content" class="form-label"></label>
-        {{#if editMode}}
-        <input type="hidden" name="postId" id="postId" value="{{post.id}}" />
-        {{/if}}
-        <textarea required name="Content" id="content" cols="30" rows="10"
-          placeholder="{{#if editMode}}{{post.content}}{{else}}Start posting here!{{/if}}"></textarea>
-
-
-        <div class="mb-3">
-          <label for="image-file" class="form-label">Ingrese una imagen:</label>
-          <input type="file" class="form-control" id="image-file" name="Image" />
-
-        </div>
-      </div>
-
-      <button class="post" type="submit">{{#if editMode}}Edit{{else}}Post{{/if}}</button>
-
-
-    </div>
-  </form>
-  {{#if editMode}}
-
-  {{else}}
-  <input type="hidden" value="{{user.id}}" name="mainuserId">
-  <p>{{user.id}}</p>
-
-
-  {{#if hasPosts}}
-
-  {{#each post as |pos|}}
-  {{#if (IgualValor ../user.id pos.userId)}}
-
-  <div class="card col-md-10 bg-dark text-light mx-auto mt-5">
-
-    <div class="posts bg-dark">
-
-      <img class="profile" src="{{../user.profilePicture}}" alt="Profile picture">
-      <p class=" mt-5 "> {{../user.userName}}</p>
-    </div>
-
-
-
-    <img src="{{pos.image}}" style="width: 100%; height:300px; object-fit:contain;" class="card-img-top" alt="imagen">
-
-    <div class="card-body">
-      <p>{{pos.createdAt}}</p>
-      <h5 class="card-text">{{pos.content}} </h5>
-
-
-      <div class="accordion bg-dark " id="{{pos.id}}">
+ <div class="accordion bg-dark " id="{{pos.id}}">
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingOne">
             <button class="accordion-button text-primary bg-light " type="button" data-bs-toggle="collapse"
@@ -118,7 +77,7 @@
                               </div>
                               <li class="list-group-item text-dark">{{rep.reply}}</li>
                             </ul>
-                          </div>
+ </div>
                           {{/if}}
                           {{/each}}
 
@@ -174,18 +133,7 @@
 
           </div>
 
-          <div style="display:flex;">
-
-
-            <form id="form-delete" class="form-inline" action="/delete-post" method="POST">
-              <input type="hidden" value="{{user.id}}" name="userId">
-              <input type="hidden" name="postId" value="{{pos.id}}" />
-              <button class="btn btn-danger mt-3 mx-3" type="submit">Delete</button>
-            </form>
-            <a class=" btn btn-primary mt-3 text-light" href="/{{pos.id}}?edit=true">Edit</a>
-
-
-          </div>
+        </div>
         </div>
 
       </div>
@@ -194,25 +142,48 @@
 
 
     </div>
-  </div>
+ 
+ 
 
-
-  {{else}}
-
-  {{/if}}
-
-  {{/each}}
-
-
-  {{else}}
-
-
-  <h2 class=" text-center ">Not posted anything yet</h2>
-
-
-
-  {{/if}}
-
-
-  {{/if}}
+           {{/each}}
+            {{else}}
+            <span>Tus amigos no tienen Posts</span>
+            {{/if}}
+</div>
+        </div>
+        <div class="col-md-5" style="margin-top: 15%;">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span class="card-title">Friends</span>
+                        <a href="/add-friends" class="btn btn-success rounded-3">+</a>
+                    </div>
+                    {{#if hasFriendsByMe}}
+                    {{#each friendByMe}}
+                    <div class="d-flex justify-content-around mt-3">
+                        <img src="{{FriendByOther.dataValues.profilePicture}}" class="w-25 rounded-circle">
+                        <span>{{FriendByOther.dataValues.name}} {{FriendByOther.dataValues.lastName}}</span>
+                        <form action="/delete-friend" method="post">
+                            <input type="hidden" name="id" id="id" value="{{id}}">
+                            <button type="submit" class="btn btn-danger rounded-circle text-center">X</button>
+                        </form>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                    {{#if hasFriendsByOther}}
+                    {{#each friendByOther}}
+                    <div class="d-flex justify-content-around mt-3">
+                        <img src="{{friendByMe.dataValues.profilePicture}}" class="w-25 rounded-circle">
+                        <span>{{friendByMe.dataValues.name}} {{friendByMe.dataValues.lastName}}</span>
+                        <form action="/delete-friend" method="post">
+                            <input type="hidden" name="id" id="id" value="{{id}}">
+                            <button type="submit" class="btn btn-danger rounded-circle text-center">X</button>
+                        </form>
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
